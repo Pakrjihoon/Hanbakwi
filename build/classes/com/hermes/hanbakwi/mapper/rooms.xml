@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rooms">
+	
+	<select id="selectOne" resultType="Rooms" parameterType="int">
+	select site_no siteNo,check_in checkIn,check_out checkOut,rs_type rsType
+	from rooms
+	where site_no=#{siteNo}
+	</select>
+	
+	<insert id="insert" parameterType="Rooms">
+	insert into rooms(SITE_NO,CHECK_IN,CHECK_OUT,RS_TYPE)
+	values(#{siteNo},#{checkIn},#{checkOut},#{rsType})
+	</insert>
+	
+</mapper>

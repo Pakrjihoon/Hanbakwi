@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="region">
+
+<select id="selectRegion" resultType="int" parameterType="String">
+select rg_no,parent
+from region
+where name=#{gugun}
+</select>
+
+
+<select id="selectCultureR" resultType="Region" parameterType="int">
+select r.lat,r.lng
+from region r, sites s
+where r.rg_no=s.rg_no and s.site_no=#{siteNo}
+</select>
+
+<select id="selectGugun" resultType="int" parameterType="String">
+SELECT rg_no, parent
+FROM region
+WHERE name = #{gugun}
+</select>
+
+<select id="selectGugun2" resultType="int" parameterType="String">
+SELECT rg_no, parent
+FROM region
+WHERE name = #{dgugun}
+</select>
+
+<select id="selectRgNo" resultType="int" parameterType="String">
+SELECT rg_no
+FROM region 
+WHERE name = #{name}
+</select>
+</mapper>  
+
+
+
+

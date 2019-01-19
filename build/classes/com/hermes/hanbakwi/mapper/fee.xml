@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fee">
+	
+	<select id="selectList" resultType="Fee" parameterType="int">
+	select person_type personType,price
+	from fee
+	where site_no=#{siteNo}
+	</select>
+	
+	<insert id="insert" parameterType="Fee">
+	insert into fee(FEE_NO,PERSON_TYPE,PRICE,IS_REP,SITE_NO)
+	values(fee_seq.nextval,'A',#{price},#{isRep},#{siteNo})
+	
+	</insert>
+	
+	
+</mapper>

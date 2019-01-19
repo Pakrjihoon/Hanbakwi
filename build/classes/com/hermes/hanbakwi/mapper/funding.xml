@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵퍼 설정**** spl구문들이 들어가는 곳(spl을 따로 빼논곳이 맵퍼 파일)-->
+<mapper namespace="funding">
+
+<select id="selectTotal" resultType="int">
+	select count(*)
+	from funding
+</select>
+
+
+<select id="selectTop3List" resultType="Funding">
+SELECT fd_no fdNo,thumbnail,title,intro,nickname,u_tier tier,ammount,deadline,rownum
+FROM funding f,users u
+WHERE f.u_no=u.u_no AND rownum BETWEEN 1 AND 3
+</select>
+
+
+<select id="selectList" resultType="Funding" parameterType="PageVO">
+SELECT FDNO,UNO,TITLE,THUMBNAIL,TRAVELDAYS,INTRO,AMMOUNT,CONTENT,DEADLINE,REGDATE,NICKNAME,U_TIER,allprice
+FROM  (SELECT fdNo,uNo,TITLE,THUMBNAIL,TRAVELDAYS,INTRO,AMMOUNT,CONTENT,DEADLINE,REGDATE,NICKNAME,U_TIER,allprice, rownum r	
+	 FROM(SELECT f.FD_NO fdNo,f.U_NO uNo,f.TITLE,f.THUMBNAIL,f.TRAVEL_DAYS travelDays,	
+				 f.INTRO,f.AMMOUNT,f.CONTENT,f.DEADLINE,f.REGDATE,u.nickname,u.u_tier,p.allprice allprice
+		  FROM funding f, users u,(SELECT FD, SUM(price) allprice FROM patron GROUP BY FD) p
+		  WHERE f.u_no=u.u_no
+		  AND p.fd(+)=f.fd_no
+		  ORDER BY
+		  <if test="filter=='success'">
+		   (ammount / allprice)
+		   </if>
+		   <if test="filter=='deadline'">
+		   deadline ASC
+		   </if>
+		   <if test="filter=='newest'">
+		   f.regdate DESC
+		   </if>
+		  ))
+WHERE r BETWEEN #{start} and #{end}
+</select>
+
+
+
+
+<select id="selectOne" parameterType="int" resultType="Funding" >
+SELECT f.FD_NO fdNo,f.U_NO uNo,f.TITLE,f.THUMBNAIL,f.TRAVEL_DAYS travelDays,	f.INTRO,f.AMMOUNT,f.CONTENT,f.DEADLINE,f.REGDATE
+,u.nickname,u.u_tier uTier,(SELECT SUM(price) FROM patron WHERE FD=#{fdNo}) allPrice, u.profile_img profileImg
+FROM funding f, users u
+WHERE f.u_no=u.u_no
+and f.fd_no=#{fdNo}
+</select>
+
+
+<insert id="insert" parameterType="Funding">
+<selectKey order="BEFORE" resultType="int" keyProperty="fdNo">
+	SELECT funding_seq.nextval
+	FROM dual
+</selectKey>
+insert into funding(FD_NO,	U_NO,	TITLE,	THUMBNAIL,	TRAVEL_DAYS,	INTRO,	AMMOUNT,CONTENT,DEADLINE,REGDATE)
+values(#{fdNo},#{uNo},#{title},#{thumbnail},#{travelDays},#{intro},#{ammount},#{content},#{deadline},systimestamp)	
+</insert>
+
+
+
+<select id="successList" resultType="Funding">
+SELECT u.nickname, t.title, t.FD_NO fdNo, t.allprice allPrice, t.intro, t.ammount,t.deadline,t.thumbnail
+FROM (SELECT *
+	  FROM funding f, (SELECT FD, SUM(price) allprice FROM patron GROUP BY FD) p
+	  WHERE f.fd_no = p.fd(+) ORDER BY (ammount / allprice)) t, users u
+WHERE t.u_no = u.u_no
+AND rownum BETWEEN 1 AND 3
+</select>
+
+<select id="deadlineList" resultType="Funding">
+select nickname, title,FD_NO fdNo, intro, ammount,deadline,thumbnail
+from(SELECT *
+		FROM funding f, users u
+ 		where f.u_no=u.u_no
+		ORDER BY deadline)
+WHERE rownum BETWEEN 1 AND 3
+</select>
+
+<select id="newList" resultType="Funding">
+select nickname, title,FD_NO fdNo, intro, ammount,deadline,thumbnail
+from(SELECT *
+		FROM funding f, users u
+ 		where f.u_no=u.u_no
+		ORDER BY f.regdate DESC)
+WHERE rownum BETWEEN 1 AND 3
+</select>
+
+</mapper>

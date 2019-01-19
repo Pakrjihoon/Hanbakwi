@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="planner">
+<select id="selectNew5List" resultType="Planner">
+SELECT p_no pNo,title,rownum
+FROM planner
+WHERE rownum BETWEEN 1 AND 5
+ORDER BY regdate DESC
+</select>
+
+<insert id="insert" parameterType="Planner" >
+insert into planner(P_NO,U_NO,TITLE,RG_NO,RG_NO2,DEPARTURE_DATE,RETURN_DATE,BUDGET,PERSON,REWARD,DEADLINE,CONTENT,VIEWS,IS_COMPLETE,REGDATE)
+values(planner_seq.nextval,#{uNo},#{title},#{rgNo},#{rgNo2},#{departureDate},#{returnDate},#{budget},#{person},#{reward},#{deadline}+${end},#{content},0,'B',systimestamp)
+</insert>
+
+<select id="selectList" resultType="Planner">
+select p_no pNo,p.u_no uNo, rg_no rgNo, rg_no2 rgNo2, budget, 
+ departure_date departureDate, return_date returnDate, person, deadline, content,
+  title, reward,is_complete isComplete,nickname
+from planner p, users u
+where p.u_no=u.u_no
+</select>
+<select id="selectRegion" resultType="int" parameterType="String">
+SELECT rg_no, parent
+FROM region
+WHERE name = #{gugun}
+</select>
+<select id="selectRegion2" resultType="int" parameterType="String">
+SELECT rg_no, parent
+FROM region
+WHERE name = #{dgugun}
+</select>
+<select id="selectOne" resultType="Planner" parameterType="int">
+select title,reward,is_complete isComplete,nickname,p_no pNo, deadline, content,
+r.name gugun, p.rg_no rgNo, r2.name sido, r2.rg_no rgNo2, p.rg_no2, r3.name dgugun, r4.name dsido
+from planner p,users u, region r, region r2, region r3, region r4
+where p.u_no=u.u_no and p_no=#{pNo} and r.rg_no = p.rg_no 
+and r.parent = r2.rg_no and r3.parent = r4.rg_no and r3.parent = r4.rg_no and r3.rg_no = p.rg_no2
+</select>
+<select id="selectUser" resultType="int" parameterType="int">
+select u_no uNo
+from planner
+where u_no = #{uNo}
+</select>
+</mapper>

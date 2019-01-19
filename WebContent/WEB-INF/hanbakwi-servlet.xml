@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<!-- MVC 설정 컨트롤러 설정은 여기에 -->
+	<!-- 어노테이션으로(반드시) -->
+	<mvc:annotation-driven />
+	
+
+	<!-- /WEB-INF/view/ .jsp -->
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/view/" suffix=".jsp" />
+	</mvc:view-resolvers>
+	
+	<!-- 모든 요청이 DispatcherServlet으로 들어가기 때문에 resource를 설정해야 합니다. -->
+	<mvc:resources location="/css/" mapping="/css/**"/>
+	<mvc:resources location="/img/" mapping="/img/**"/>
+	<mvc:resources location="/upload/" mapping="/upload/**"/>
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/fonts/" mapping="/fonts/**"/>
+	<mvc:resources location="/funding/" mapping="/funding/**"/>
+	<mvc:resources location="/profile" mapping="/profile/**"></mvc:resources>
+	<mvc:resources location="/thumb" mapping="/thumb/**"/>
+	
+	<!-- controller 설정 -->
+	<bean
+	p:exploresService-ref="exploresService"
+	p:plannersService-ref="plannersService"
+	p:fundingsService-ref="fundingsService"
+	class="com.hermes.hanbakwi.controller.IndexController"/>
+	<!-- 의존성 주입. 빈와이어링=빈묶기 -->
+	<bean
+	p:usersService-ref="usersService"
+	class="com.hermes.hanbakwi.controller.UserController"/>
+	<bean
+	p:fundingsService-ref="fundingsService"
+	p:resizeImageUtil-ref="resizeImageUtil"
+	p:patronsService-ref="patronsService"
+	class="com.hermes.hanbakwi.controller.FundingController"/>
+	<bean
+	p:sitesService-ref="sitesService"
+	class="com.hermes.hanbakwi.controller.SightController"/>
+	<bean
+	p:plannersService-ref="plannersService"
+	p:exploresService-ref="exploresService"
+	class="com.hermes.hanbakwi.controller.LocalController"/>
+	<bean
+	p:roomService-ref="roomService"
+	p:culturesService-ref="culturesService"
+	p:diningsService-ref="diningsService"
+	class="com.hermes.hanbakwi.controller.ContentController"/>
+	<bean
+	class="com.hermes.hanbakwi.controller.MyPageController"/>
+	<bean
+	p:regionsService-ref="regionsService"
+	p:exploresService-ref="exploresService"
+	class="com.hermes.hanbakwi.controller.ExploreController"/>
+	<bean
+	p:plannersService-ref="plannersService"
+	p:usersService-ref="usersService"
+	p:regionsService-ref="regionsService"
+	class="com.hermes.hanbakwi.controller.PlannerController"/>
+	
+	<!-- MultipartResovler(파일업로드 처리) -->
+	<bean id="multipartResolver" 
+		p:defaultEncoding="UTF-8"
+		p:maxUploadSize="104857600"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	
+</beans>

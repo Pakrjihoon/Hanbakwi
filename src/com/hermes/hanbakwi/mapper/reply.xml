@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reply">
+<select id="selectList" resultType="Reply" parameterType="PageVO">
+select rpNO,uNo,content,type,no,regdate,nickname,profileImg
+FROM(SELECT rpNO,uNo,content,type,no,regdate,nickname,profileImg,rownum r
+FROM(SELECT r.RP_NO rpNo,r.U_NO uNo,r.CONTENT content,r.TYPE type,r.NO no,r.REGDATE regdate,u.nickname nickname
+,u.profile_img profileImg
+FROM replies r, users u
+WHERE no =#{no} and r.u_no=u.u_no
+order by 6 desc))
+where r between #{start} and #{end}
+</select>
+
+<select id="selectTotal" resultType="int">
+select count(*)
+from replies
+where no=#{no}
+</select>
+
+<insert id="insert" parameterType="Reply">
+insert into replies(RP_NO,U_NO,CONTENT,TYPE,NO,REGDATE,COMP,NEG,NEUT,NONE,POS)
+values(replies_seq.nextval,#{uNo},#{content},'S',#{no},systimestamp,#{complex},#{negative},#{neutral},#{none},#{positive})
+</insert>	
+</mapper>

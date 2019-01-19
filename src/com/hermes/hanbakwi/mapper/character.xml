@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="character">
+	
+	<select id="selectCharacter" resultType="Character" parameterType="int">
+	select c.name name
+	from site_char sc,character c
+	where sc.cr_no=c.cr_no and sc.site_no=#{siteNo}
+	</select>
+	
+	
+	
+</mapper>

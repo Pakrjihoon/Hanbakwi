@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- null 입력할 경우 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<typeAliases>
+		 <typeAlias alias="Journal" type="com.hermes.hanbakwi.vo.Journal"/>
+		 <typeAlias alias="Explore" type="com.hermes.hanbakwi.vo.Explore"/>
+		 <typeAlias alias="Planner" type="com.hermes.hanbakwi.vo.Planner"/>
+		 <typeAlias alias="User" type="com.hermes.hanbakwi.vo.User"/>
+		 <typeAlias alias="Funding" type="com.hermes.hanbakwi.vo.Funding"/>
+		<typeAlias alias="Dining" type="com.hermes.hanbakwi.vo.Dining"/>
+		<typeAlias alias="Culture" type="com.hermes.hanbakwi.vo.Culture"/>
+		<typeAlias alias="Character" type="com.hermes.hanbakwi.vo.Character"/>
+		<typeAlias alias="Region" type="com.hermes.hanbakwi.vo.Region"/>
+		<typeAlias alias="Site" type="com.hermes.hanbakwi.vo.Site"/>
+		<typeAlias alias="Image" type="com.hermes.hanbakwi.vo.Image"/>
+		<typeAlias alias="Menu" type="com.hermes.hanbakwi.vo.Menu"/>
+		<typeAlias alias="Fee" type="com.hermes.hanbakwi.vo.Fee"/>
+		<typeAlias alias="Rooms" type="com.hermes.hanbakwi.vo.Rooms"/>
+		<typeAlias alias="Room" type="com.hermes.hanbakwi.vo.Room"/>
+		<typeAlias alias="Reply" type="com.hermes.hanbakwi.vo.Reply"/>
+		<typeAlias alias="PageVO" type="com.hermes.hanbakwi.vo.PageVO"/>
+		<typeAlias alias="Patron" type="com.hermes.hanbakwi.vo.Patron"/>
+		<typeAlias alias="SiteChar" type="com.hermes.hanbakwi.vo.SiteChar"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="com/hermes/hanbakwi/mapper/journal.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/explore.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/planner.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/users.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/dining.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/culture.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/character.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/region.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/site.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/image.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/menu.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/fee.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/room.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/rooms.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/reply.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/funding.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/patrons.xml"/>
+		<mapper resource="com/hermes/hanbakwi/mapper/sitechar.xml"/>
+	</mappers>
+	
+</configuration>

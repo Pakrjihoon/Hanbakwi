@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="room">
+	
+	<select id="selectList" resultType="Room" parameterType="int">
+	select RM_NO rmNo,THUMBNAIL,NAME,BASIC_PEOPLE basicPeople,ADD_PEOPLE addPeople,
+	BASIC_PRICE basicPrice,ADD_PRICE addPrice,TIME_PRICE timePrice,SITE_NO siteNo
+	from room
+	where site_no=#{siteNo}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵퍼 설정**** spl구문들이 들어가는 곳(spl을 따로 빼논곳이 맵퍼 파일)-->
+<mapper namespace="patrons">
+<insert id="insert" parameterType="Patron">
+insert into patron(PT_NO,U_NO,FD,PRICE,REQUIRE,REGDATE)
+values(patron_seq.nextval,#{uNo},#{fd},#{price},#{require},systimestamp)
+</insert>
+
+
+<select id="selectList" resultType="Patron" parameterType="int">
+SELECT u.nickname, u.profile_img , p.price, p.regdate, p.require
+FROM patron p, users u
+WHERE p.u_no = u.u_no
+AND fd = #{fdNo}
+</select>
+
+
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- service 서비스 등 Sprign 설정 -->
+	<!-- WAS가 생성한 커넥션풀을 JNDI로 찾음
+	 -->
+	<jee:jndi-lookup
+	 id="dataSource"
+	 jndi-name="java:comp/env/jdbc/oracle">
+	</jee:jndi-lookup>
+	 
+	<!-- SqlSessionFactory 설정
+	p:dataSource-ref : 커넥션풀 의존성 주입
+	p:configLocation : mybatis-config.xml 경로 설정
+	 -->
+	<bean
+	id="sqlSessionFactory"
+	p:dataSource-ref="dataSource"
+	p:configLocation="/WEB-INF/mybatis-config.xml"
+	class="org.mybatis.spring.SqlSessionFactoryBean"/>
+	
+	<!-- SqlSession 설정 -->
+	<bean id="sqlSession"
+	c:sqlSessionFactory-ref="sqlSessionFactory"
+	 class="org.mybatis.spring.SqlSessionTemplate"/>
+	 
+	 <!-- DAO -->
+	 <bean class="com.hermes.hanbakwi.dao.ActivitiesDAOImpl" id="activitiesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.AppliesDAOImpl" id="appliesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.BookmarksDAOImpl" id="bookmarksDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.CharactersDAOImpl" id="charactersDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.CoinsDAOImpl" id="coinsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.CulturesDAOImpl" id="culturesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.DiningsDAOImpl" id="diningsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.ExploresDAOImpl" id="exploresDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.FeesDAOImpl" id="feesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.FollowsDAOImpl" id="followsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.FundingsDAOImpl" id="fundingsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.ImagesDAOimpl" id="imagesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.JournalListsDAOImpl" id="journalListsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.JournalsDAOImpl" id="journalsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.JournalTagsDAOImpl" id="journalTagsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.KmsDAOImpl" id="kmsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.MenusDAOImpl" id="menusDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.PatronsDAOImpl" id="patronsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.PlannersDAOImpl" id="plannersDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.RegionsDAOImpl" id="regionsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.RepliesDAOImpl" id="repliesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.ReviewsDAOImpl" id="reviewsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.RoomDAOImpl" id="roomDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.RoomsDAOImpl" id="roomsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.ScoresDAOImpl" id="scoresDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.SiteCharsDAOImpl" id="siteCharsDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.SitesDAOImpl" id="sitesDAO" p:session-ref="sqlSession"/>
+	 <bean class="com.hermes.hanbakwi.dao.TagsDAOImpl" id="tagsDAO" p:session-ref="sqlSession" />
+	 <bean class="com.hermes.hanbakwi.dao.UsersDAOImpl" id="usersDAO" p:session-ref="sqlSession"/>
+	 
+	 <!-- Service -->
+	 
+	 <bean class="com.hermes.hanbakwi.service.ActivitiesServiceImpl" id="activitiesService" p:activitiesDAO-ref="activitiesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.AppliesServiceImpl" id="appliesService" p:appliesDAO-ref="appliesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.BookmarksServiceImpl" id="bookmarksService" p:bookmarksDAO-ref="bookmarksDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.CharactersServiceImpl" id="charactersService" p:charactersDAO-ref="charactersDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.CoinsServiceImpl" id="coinsService" p:coinsDAO-ref="coinsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.CulturesServiceImpl" id="culturesService" p:culturesDAO-ref="culturesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.DiningsServiceImpl" id="diningsService" p:diningsDAO-ref="diningsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.ExploresServiceImpl" id="exploresService" p:exploresDAO-ref="exploresDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.FeesServiceImpl" id="feesService" p:feesDAO-ref="feesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.FollowsServiceImpl" id="followsService" p:followsDAO-ref="followsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.FundingsServiceImpl" id="fundingsService" p:fundingsDAO-ref="fundingsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.ImagesServiceImpl" id="imagesService" p:imagesDAO-ref="imagesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.JournalListsServiceImpl" id="journalListsService" p:journalListsDAO-ref="journalListsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.JournalsServiceImpl" id="journalsService" p:journalsDAO-ref="journalsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.JournalTagsServiceImpl" id="journalTagsService" p:journalTagsDAO-ref="journalTagsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.KmsServiceImpl" id="kmsService" p:kmsDAO-ref="kmsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.MenusServiceImpl" id="menusService" p:menusDAO-ref="menusDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.PatronsServiceImpl" id="patronsService" p:patronsDAO-ref="patronsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.PlannersServiceImpl" id="plannersService" p:plannersDAO-ref="plannersDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.RegionsServiceImpl" id="regionsService" p:regionsDAO-ref="regionsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.RepliesServiceImpl" id="repliesService" p:repliesDAO-ref="repliesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.ReviewsServiceImpl" id="reviewsService" p:reviewsDAO-ref="reviewsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.RoomServiceImpl" id="roomService" p:roomDAO-ref="roomDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.RoomsServiceImpl" id="roomsService" p:roomsDAO-ref="roomsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.ScoresServiceImpl" id="scoresService" p:scoresDAO-ref="scoresDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.SiteCharsServiceImpl" id="siteCharsService" p:siteCharsDAO-ref="siteCharsDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.SitesServiceImpl" 
+	 p:diningsDAO-ref="diningsDAO"
+	 p:roomsDAO-ref="roomsDAO"
+	 p:feesDAO-ref="feesDAO"
+	 p:siteCharsDAO-ref="siteCharsDAO"
+	 p:culturesDAO-ref="culturesDAO"
+	 p:regionsDAO-ref="regionsDAO"
+	 id="sitesService" p:sitesDAO-ref="sitesDAO"/>
+	 <bean class="com.hermes.hanbakwi.service.TagsServiceImpl" id="tagsService" p:tagsDAO-ref="tagsDAO" />
+	 <bean class="com.hermes.hanbakwi.service.UsersServiceImpl" id="usersService" p:usersDAO-ref="usersDAO"/>
+	 
+	  <!--Util-->
+	  <bean class="com.hermes.hanbakwi.util.PaginateUtil" id="paginateUtil"/>
+	  <bean id="resizeImageUtil" class="com.hermes.hanbakwi.util.ResizeImageUtil"/>
+	
+	 
+	 </beans>

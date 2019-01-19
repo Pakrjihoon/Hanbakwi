@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dining">	
+<select id="selectOne" resultType="Dining" parameterType="int">
+SELECT site_no siteNo, open, close, off, d_type dType, food_type foodType
+FROM dining
+WHERE site_no = #{site_no}
+</select>
+
+<insert id="insert" parameterType="Dining">
+insert into dining(SITE_NO,OPEN,CLOSE,OFF,D_TYPE,FOOD_TYPE)
+values(#{siteNo},#{open},#{close},#{off},#{dType},#{foodType})
+
+</insert>
+</mapper>

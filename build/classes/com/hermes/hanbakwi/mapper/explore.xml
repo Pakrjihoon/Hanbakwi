@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="explore">
+<select id="selectNew5List" resultType="Explore">
+SELECT e_no,title,rownum
+FROM explore
+WHERE rownum BETWEEN 1 AND 5
+ORDER BY regdate DESC
+</select>
+
+<select id="selectList" resultType="Explore">
+select title,reward,is_complete isComplete,nickname,e_no eNo, deadline, content, destination, rg_no rgNo
+from explore e,users u
+where e.u_no=u.u_no
+order by e.regdate desc
+</select>
+
+<select id="selectRegion" resultType="int" parameterType="String">
+SELECT rg_no, parent
+FROM region
+WHERE name = #{gugun2}
+</select>
+
+<insert id="insert" parameterType="Explore" >
+insert into explore(E_NO,U_NO,TITLE,RG_NO,DESTINATION,REWARD,DEADLINE,
+CONTENT,VIEWS,OPENKAKAO,IS_COMPLETE,REGDATE)
+values(explore_seq.nextval,${uNo},#{title},#{rgNo},#{destination},#{reward},#{deadline}+${end},
+#{content},0,'kakao','B',systimestamp)
+</insert>
+
+<select id="selectOne" resultType="Explore" parameterType="int">
+select title,reward,is_complete isComplete,nickname,e_no eNo, deadline, content, destination, r.name gugun, e.rg_no rgNo, r2.name sido, r2.rg_no rgNo2
+from explore e,users u, region r, region r2
+where e.u_no=u.u_no and e_no=#{eNo} and r.rg_no = e.rg_no
+and r.parent = r2.rg_no
+</select>
+<select id="selectUser" resultType="int" parameterType="int">
+select u_no uNo
+from explore
+where u_no = #{uNo}
+</select>
+
+</mapper>

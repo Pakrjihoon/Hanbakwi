@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site">
+
+	<select id="selectList" resultType="Site">
+		select s.u_no uNo,NAME,INTRO,u.u_tier uTier
+		from sites s,users u
+		where s.u_no=u.u_no
+	</select>
+
+	<insert id="insert" parameterType="Site">
+		<selectKey order="BEFORE" keyProperty="no" resultType="int">
+			select sites_seq.nextval
+			from dual
+		</selectKey>
+		insert into
+		sites(SITE_NO,U_NO,NAME,ADDRESS,TEL,INTRO,TYPE,IS_ENROLLED,REGDATE,LAT,LNG,rg_no)
+		values(#{no},#{uNo},#{name},#{address},#{tel},#{intro},#{type},'T',systimestamp,#{lat},#{lng},#{rgNo})
+	</insert>
+
+	<select id="selectSite" resultType="Site" parameterType="int">
+		select
+		site_no siteNo, name,address,tel,intro,type,lat,lng,u.nickname
+		nickname,u.profile_img profileImg
+		from site s,users u
+		where
+		s.site_no=#{siteNo} and s.u_no=u.u_no
+	</select>
+
+	<select id="selectOne" parameterType="int" resultType="int">
+		select
+		site_no siteNo
+		from site
+		where site_no=#{siteNo}
+	</select>
+
+	<select id="selectLocation" resultType="Site"
+		parameterType="String">
+		select name,address
+		from sites
+		where name like #{name}
+	</select>
+
+	<insert id="registerSite" parameterType="Site">
+		insert into
+		site(SITE_NO,U_NO,NAME,RG_NO,ADDRESS,TEL,INTRO,TYPE,IS_ENROLLED,REGDATE,LAT,LNG)
+		values(sites_seq.nextval,1,#{name},28,#{address},#{tel},#{intro},#{type},'T',systimestamp,#{lat},#{lng})
+	</insert>
+
+</mapper>
+	

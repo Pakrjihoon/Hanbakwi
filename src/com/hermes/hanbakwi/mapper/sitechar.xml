@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sitechar">
+	
+	<insert id="insert" parameterType="SiteChar">
+		insert into site_char(SC_NO,SITE_NO,CR_NO)
+		values(site_char_seq.nextval,#{siteNo},#{crNo})
+	</insert>
+	
+	
+	
+</mapper>
