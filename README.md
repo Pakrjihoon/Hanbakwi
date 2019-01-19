@@ -28,14 +28,19 @@
   
   
   
-  
-  
-  - 환경
+환경
 OS : Window 7, 10
+
 DB :  Oracle 11g 
+
 IDE : Eclipse, WebStorm
+
 WAS : Apache Tomcat 8.5v
+
 Framework : iBatis(MyBatis), Spring 4.x~5.2
+
 Skills : HTML, CSS, Servlet, JSTL, Ajax
+
 Language : Java, JSP, Jquery, javascript 
+
 Tools : OvenApp, Exerd
